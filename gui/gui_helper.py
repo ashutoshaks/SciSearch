@@ -1,5 +1,6 @@
 import math
 import json
+import os
 from time import time
 from random import shuffle
 import numpy as np
@@ -61,8 +62,10 @@ class QBESciAR (nn.Module):
         tuned2 = self.fine_tuner(ins2)
         return self.score_gen(tuned1, tuned2)
 
+script_dir =  os.path.dirname(__file__)
+
 def GetQueryFeature(baseline, facet, paper_id):
-    query_feature_data_file_name = '../data/' + baseline + '/' + facet + '.json'
+    query_feature_data_file_name = os.path.join(script_dir, '../data/' + baseline + '/' + facet + '.json')
     query_feature_data_file = open(query_feature_data_file_name)
     query_feature_data = json.load(query_feature_data_file)
     query_feature_data_file.close()
@@ -70,11 +73,11 @@ def GetQueryFeature(baseline, facet, paper_id):
 
 
 def GetCandidateFeatures(baseline, facet, paper_id):
-    rank_data_file_name = '../data/test-pid2anns-csfcube-' + facet + '.json'
+    rank_data_file_name = os.path.join(script_dir, '../data/test-pid2anns-csfcube-' + facet + '.json')
     rank_data_file = open(rank_data_file_name)
     rank_data = json.load(rank_data_file)
 
-    cand_feature_data_file_name = '../data/' + baseline + '/all.json'
+    cand_feature_data_file_name = os.path.join(script_dir, '../data/' + baseline + '/all.json')
     cand_feature_data_file = open(cand_feature_data_file_name)
     cand_feature_data = json.load(cand_feature_data_file)
 
@@ -92,7 +95,7 @@ def QBERetrieveSciArticles(baseline, facet, paper_id, loss_fn = "KLDivLoss", top
     cand_c = len(cand_f)
 
     model_name = baseline + '/' + facet + '.qbe'
-    model = torch.load('../models-' + loss_fn + '/' + model_name)
+    model = torch.load(os.path.join(script_dir, '../models-' + loss_fn + '/' + model_name))
     model.eval()
 
     ins1, ins2 = [qf] * cand_c, cand_f

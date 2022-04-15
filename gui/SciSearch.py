@@ -1,6 +1,7 @@
 import streamlit as st
 import jsonlines
 import json
+import os
 from gui_helper import *
 
 
@@ -15,24 +16,26 @@ class Paper:
 
 
 papers = dict()
-with jsonlines.open('../data/abstracts-csfcube-preds.jsonl') as reader:
+script_dir = os.path.dirname(__file__)
+with jsonlines.open(os.path.join(script_dir, '../data/abstracts-csfcube-preds.jsonl')) as reader:
     for obj in reader:
         papers[obj['paper_id']] = Paper(obj['paper_id'], obj['metadata'], obj['title'],
                                         obj['abstract'], obj['pred_labels_truncated'], obj['pred_labels'])
 
-f = open('../data/test-pid2anns-csfcube-background.json')
+# f = open('../data/test-pid2anns-csfcube-background.json')
+f = open(os.path.join(script_dir, '../data/test-pid2anns-csfcube-background.json'))
 q_background = json.load(f)
 q_background_ids = list(q_background.keys())
 q_background_ids.remove('1791179')
 q_background_ids.insert(1, '1791179')
 
-f = open('../data/test-pid2anns-csfcube-method.json')
+f = open(os.path.join(script_dir, '../data/test-pid2anns-csfcube-method.json'))
 q_method = json.load(f)
 q_method_ids = list(q_method.keys())
 q_method_ids.remove('10010426')
 q_method_ids.insert(0, '10010426')
 
-f = open('../data/test-pid2anns-csfcube-result.json')
+f = open(os.path.join(script_dir, '../data/test-pid2anns-csfcube-result.json'))
 q_result = json.load(f)
 q_result_ids = list(q_result.keys())
 q_result_ids.remove('3264891')
