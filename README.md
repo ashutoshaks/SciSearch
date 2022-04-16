@@ -3,7 +3,9 @@ This project is an attempt of implementing and improving on the work of **Sheshe
 
 The dataset can be found here: https://github.com/iesl/CSFCube
 
-The paper describing the dataset can be accessed here: https://openreview.net/forum?id=8Y50dBbmGU
+The paper describing the dataset can be accessed here: https://arxiv.org/abs/2103.12906
+
+Demo video: https://youtu.be/CNITDhWITH0
 
 **Team members:** Ashutosh Kumar Singh, Ashwamegh Rathore, Nakul Aggarwal, Suhas Jain
 
